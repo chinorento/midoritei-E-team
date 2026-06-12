@@ -1,0 +1,18 @@
+/* テーブル管理メニュー用スタイル */
+:root{
+    --bg:#ffffff;
+    --text:#222;
+    --accent:#2b6cb0;
+    --button:#f4f4f4;
+    --button-border:#cfcfcf;
+}
+*{box-sizing:border-box}
+body{font-family:"Hiragino Kaku Gothic ProN",Meiryo,sans-serif;background:var(--bg);color:var(--text);margin:0}
+
+header.top{padding:18px 24px}
+header.top h1{margin:0;font-size:18px;color:var(--accent)}
+
+.content{min-height:calc(100vh - 72px);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:16px;padding:40px 24px}
+.menu-btn{width:260px;max-width:90%;padding:16px 20px;font-size:16px;border:1px solid var(--button-border);background:var(--button);border-radius:6px;cursor:pointer;transition:background .2s}
+.menu-btn:hover{background:#eaeaea}
+@media(max-width:420px){.content{padding:24px 16px}.menu-btn{width:100%;max-width:none}}

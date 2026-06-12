@@ -1,0 +1,18 @@
+/* parttime メニュー画面 */
+:root{
+    --bg:#ffffff;
+    --text:#20232a;
+    --accent:#2a4f8a;
+    --button-bg:#f4f4f4;
+    --button-border:#bfc4cc;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Hiragino Kaku Gothic ProN",Meiryo,sans-serif;background:var(--bg);color:var(--text)}
+.container{max-width:360px;margin:0 auto;padding:32px 20px}
+.heading{margin-bottom:32px}
+.brand{margin:0;font-size:18px;color:var(--accent)}
+.subtitle{margin:8px 0 0;font-size:16px;line-height:1.4}
+.button-list{display:flex;flex-direction:column;gap:12px}
+.menu-button{width:100%;padding:16px 18px;font-size:15px;text-align:center;border:1px solid var(--button-border);border-radius:6px;background:var(--button-bg);cursor:pointer;transition:background .2s}
+.menu-button:hover{background:#e8eaef}
+@media(max-width:420px){.container{padding:28px 16px}.menu-button{padding:14px 16px;font-size:14px}}
