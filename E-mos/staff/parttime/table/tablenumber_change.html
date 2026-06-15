@@ -12,18 +12,20 @@
     </header>
 
     <main class="center">
-        <div class="row">
-            <div class="label">変更前：</div>
-            <div class="value-box" id="currentTable">6番卓</div>
-        </div>
-        <div class="row">
-            <div class="label">変更後：</div>
-            <input id="tableInput" class="table-input" type="text" placeholder="例: 3番卓" aria-label="変更後テーブル番号入力">
-        </div>
+        <div class="page-card">
+            <div class="field">
+                <label class="label" for="currentTableInput">変更前</label>
+                <input id="currentTableInput" class="table-input" type="text" aria-label="変更前テーブル番号入力">
+            </div>
+            <div class="field">
+                <label class="label" for="tableInput">変更後</label>
+                <input id="tableInput" class="table-input" type="text" aria-label="変更後テーブル番号入力">
+            </div>
 
-        <div class="actions">
-            <button id="btnBack" class="btn outline">戻る</button>
-            <button id="btnSave" class="btn primary">変更</button>
+            <div class="actions">
+                <button id="btnBack" class="btn outline">戻る</button>
+                <button id="btnSave" class="btn primary">変更</button>
+            </div>
         </div>
 
         <div id="confirmModal" class="modal hidden">

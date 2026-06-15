@@ -4,8 +4,6 @@
     const btnIssue = document.getElementById('btnIssue');
     const qrArea = document.getElementById('qrArea');
     const qrImage = document.getElementById('qrImage');
-    const downloadLink = document.getElementById('downloadLink');
-    const btnCopy = document.getElementById('btnCopy');
 
     let tableNumber = null;
 
@@ -43,7 +41,6 @@
         const payload = buildPayload();
         const url = makeQrUrl(payload, 300);
         qrImage.src = url;
-        downloadLink.href = url;
         qrArea.classList.remove('hidden');
         modal.classList.add('hidden');
     }
@@ -63,17 +60,4 @@
         window.location.href = 'table_menu.html';
     });
 
-    btnCopy.addEventListener('click', async ()=>{
-        if(!tableNumber){
-            alert('先に発行してください。');
-            return;
-        }
-        const payload = buildPayload();
-        try{
-            await navigator.clipboard.writeText(payload);
-            alert('データをクリップボードにコピーしました。');
-        }catch(e){
-            prompt('コピーできませんでした。以下を手動でコピーしてください。', payload);
-        }
-    });
 })();

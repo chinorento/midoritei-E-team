@@ -7,7 +7,13 @@
     const btnConfirm = document.getElementById('btnConfirm');
 
     function openConfirmation(){
+        const current = document.getElementById('currentTableInput').value.trim();
         const value = input.value.trim();
+        if(!current){
+            alert('変更前のテーブル番号を入力してください。');
+            document.getElementById('currentTableInput').focus();
+            return;
+        }
         if(!value){
             alert('変更後のテーブル番号を入力してください。');
             input.focus();
@@ -17,7 +23,7 @@
     }
 
     function changeTableNumber(){
-        const current = document.getElementById('currentTable').textContent;
+        const current = document.getElementById('currentTableInput').value.trim();
         const value = input.value.trim();
         confirmModal.classList.add('hidden');
         alert(`${current} を ${value} に変更しました。`);
