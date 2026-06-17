@@ -1,0 +1,33 @@
+/* QRコード生成ページ用スタイル */
+:root{
+    --bg:#f2f4f8;
+    --card:#ffffff;
+    --text:#1e293b;
+    --accent:#2563eb;
+    --button:#e2e8f0;
+    --border:#cbd5e1;
+}
+*{box-sizing:border-box}
+body{font-family:"Hiragino Kaku Gothic ProN",Meiryo,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:0}
+header.top{background:var(--accent);color:#fff;padding:18px 20px;box-shadow:0 2px 12px rgba(0,0,0,0.12)}
+header.top h1{margin:0;font-size:20px;font-weight:700;letter-spacing:.03em}
+main.center{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:20px;gap:18px}
+.page-card{width:100%;max-width:420px;background:var(--card);border-radius:28px;box-shadow:0 22px 40px rgba(15,23,42,0.08);padding:24px;display:flex;flex-direction:column;gap:18px}
+.lead{text-align:center;font-size:16px;margin:0;color:#334155;line-height:1.6}
+.table-input{width:100%;height:54px;border:2px solid #d1d5db;border-radius:16px;padding:0 18px;font-size:17px;text-align:left}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px}
+.btn{width:100%;padding:16px 18px;border-radius:16px;font-size:16px;cursor:pointer;border:1px solid var(--border);background:var(--button);color:var(--text);transition:transform .15s ease,box-shadow .15s ease}
+.btn:hover{transform:translateY(-1px);box-shadow:0 10px 18px rgba(15,23,42,0.08)}
+.btn.outline{background:#fff}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.qr-area{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:12px;padding:18px;border:1px solid #e2e8f0;border-radius:22px;background:#f8fafc}
+
+@media(max-width:420px){
+    header.top{padding:16px 18px}
+    .page-card{padding:20px;border-radius:24px}
+    .table-input{height:52px;font-size:16px}
+    .actions{grid-template-columns:1fr}
+    .btn{padding:14px 16px}
+    .qr-image{width:220px;height:220px}
+    .modal-content{padding:18px}
+}
