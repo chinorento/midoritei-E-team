@@ -1,0 +1,271 @@
+document.addEventListener("DOMContentLoaded", function () {
+  const categoryButtons = document.querySelectorAll(".category-nav .category");
+  const sectionTitle = document.querySelector(".section-title");
+  const bottomNavButtons = document.querySelectorAll(".bottom-nav button");
+  const menuCards = document.querySelectorAll(".menu-card");
+  const menuModal = document.querySelector(".menu-modal");
+  const modalOverlay = document.querySelector(".menu-modal__overlay");
+  const cartDrawer = document.querySelector(".cart-drawer");
+  const cartOverlay = document.querySelector(".cart-drawer__overlay");
+  const cartCloseButton = document.querySelector(".cart-drawer__button--secondary");
+  const cartConfirmButton = document.querySelector(".cart-drawer__button--primary");
+  const cartList = document.querySelector(".cart-drawer__list");
+  const cartEmptyText = document.querySelector(".cart-drawer__empty");
+  const modalBackButton = document.querySelector(".menu-modal__button--secondary");
+  const modalConfirmButton = document.querySelector(".menu-modal__button--primary");
+  const modalTitle = document.querySelector(".menu-modal__title");
+  const modalImage = document.querySelector(".menu-modal__image");
+  const quantityInput = document.querySelector(".quantity-input");
+  const decreaseButton = document.querySelector("[data-action='decrease']");
+  const increaseButton = document.querySelector("[data-action='increase']");
+
+  let cartItems = [];
+  let currentModalCard = null;
+
+  function showToast(message) {
+    const toast = document.createElement("div");
+    toast.textContent = message;
+    toast.style.position = "fixed";
+    toast.style.left = "50%";
+    toast.style.bottom = "86px";
+    toast.style.transform = "translateX(-50%)";
+    toast.style.background = "rgba(79, 42, 0, 0.9)";
+    toast.style.color = "#fff";
+    toast.style.padding = "12px 18px";
+    toast.style.borderRadius = "999px";
+    toast.style.fontSize = "0.95rem";
+    toast.style.zIndex = "1000";
+    toast.style.boxShadow = "0 8px 20px rgba(0,0,0,0.12)";
+    document.body.appendChild(toast);
+
+    setTimeout(function () {
+      toast.style.transition = "opacity 0.25s ease";
+      toast.style.opacity = "0";
+      setTimeout(function () {
+        document.body.removeChild(toast);
+      }, 250);
+    }, 1400);
+  }
+
+  function openMenuModal(card) {
+    if (!menuModal) {
+      return;
+    }
+
+    currentModalCard = card;
+    const title = card.querySelector("h2")?.textContent.trim() || "メニュー";
+    const imageLabel = card.querySelector(".menu-card__image")?.textContent.trim() || "商品";
+    modalTitle.textContent = title;
+    modalImage.textContent = imageLabel;
+    quantityInput.value = "1";
+    menuModal.classList.remove("hidden");
+  }
+
+  function closeMenuModal() {
+    if (!menuModal) {
+      return;
+    }
+    menuModal.classList.add("hidden");
+  }
+
+  function formatPrice(amount) {
+    if (amount == null) {
+      return "";
+    }
+    return "¥" + Number(amount).toLocaleString() + "（税込）";
+  }
+
+  function renderCartItems() {
+    if (!cartList || !cartEmptyText) {
+      return;
+    }
+
+    cartList.innerHTML = "";
+
+    if (cartItems.length === 0) {
+      cartEmptyText.style.display = "block";
+      cartList.style.display = "none";
+      return;
+    }
+
+    cartEmptyText.style.display = "none";
+    cartList.style.display = "grid";
+
+    cartItems.forEach(function (item) {
+      const listItem = document.createElement("li");
+      listItem.className = "cart-drawer__item";
+
+      const content = document.createElement("div");
+      const titleEl = document.createElement("div");
+      titleEl.className = "cart-drawer__item-title";
+      titleEl.textContent = item.title;
+
+      const controls = document.createElement("div");
+      controls.className = "cart-drawer__item-controls";
+
+      const decreaseBtn = document.createElement("button");
+      decreaseBtn.type = "button";
+      decreaseBtn.className = "cart-drawer__qty-button";
+      decreaseBtn.dataset.action = "decrease";
+      decreaseBtn.dataset.title = item.title;
+      decreaseBtn.textContent = "−";
+
+      const quantityText = document.createElement("span");
+      quantityText.className = "cart-drawer__item-quantity";
+      quantityText.textContent = `${item.quantity}個`;
+
+      const increaseBtn = document.createElement("button");
+      increaseBtn.type = "button";
+      increaseBtn.className = "cart-drawer__qty-button";
+      increaseBtn.dataset.action = "increase";
+      increaseBtn.dataset.title = item.title;
+      increaseBtn.textContent = "+";
+
+      controls.appendChild(decreaseBtn);
+      controls.appendChild(quantityText);
+      controls.appendChild(increaseBtn);
+
+      content.appendChild(titleEl);
+      content.appendChild(controls);
+
+      listItem.appendChild(content);
+      cartList.appendChild(listItem);
+
+      decreaseBtn.addEventListener("click", function () {
+        updateCartItemQuantity(item.title, item.quantity - 1);
+      });
+      increaseBtn.addEventListener("click", function () {
+        updateCartItemQuantity(item.title, item.quantity + 1);
+      });
+    });
+  }
+
+  function updateCartItemQuantity(title, quantity) {
+    if (!title) {
+      return;
+    }
+
+    const existing = cartItems.find(function (item) {
+      return item.title === title;
+    });
+
+    if (!existing) {
+      return;
+    }
+
+    if (quantity <= 0) {
+      cartItems = cartItems.filter(function (item) {
+        return item.title !== title;
+      });
+    } else {
+      existing.quantity = quantity;
+    }
+
+    renderCartItems();
+  }
+
+  function addToCartItem(title, price, quantity) {
+    if (!title || quantity <= 0) {
+      return;
+    }
+
+    const existing = cartItems.find(function (item) {
+      return item.title === title;
+    });
+
+    if (existing) {
+      existing.quantity += quantity;
+    } else {
+      cartItems.push({ title: title, price: price, quantity: quantity });
+    }
+  }
+
+  function openCartDrawer() {
+    if (!cartDrawer) {
+      return;
+    }
+    renderCartItems();
+    cartDrawer.classList.remove("hidden");
+    setTimeout(function () {
+      cartDrawer.classList.add("open");
+    }, 10);
+  }
+
+  function closeCartDrawer() {
+    if (!cartDrawer) {
+      return;
+    }
+    cartDrawer.classList.remove("open");
+  }
+
+  menuCards.forEach(function (card) {
+    card.addEventListener("click", function () {
+      openMenuModal(card);
+    });
+  });
+
+  decreaseButton?.addEventListener("click", function () {
+    const value = Number(quantityInput.value || "1");
+    if (value > 1) {
+      quantityInput.value = String(value - 1);
+    }
+  });
+
+  increaseButton?.addEventListener("click", function () {
+    const value = Number(quantityInput.value || "1");
+    quantityInput.value = String(value + 1);
+  });
+
+  modalBackButton?.addEventListener("click", closeMenuModal);
+  modalConfirmButton?.addEventListener("click", function () {
+    const count = Number(quantityInput.value || "1");
+    const price = currentModalCard ? Number(currentModalCard.dataset.price || 0) : 0;
+    addToCartItem(modalTitle.textContent, price, count);
+    showToast(`${modalTitle.textContent}を${count}個カートに追加しました。`);
+    closeMenuModal();
+  });
+
+  cartCloseButton?.addEventListener("click", closeCartDrawer);
+  cartConfirmButton?.addEventListener("click", function () {
+    cartItems = [];
+    renderCartItems();
+    showToast("注文を確定しました。");
+    closeCartDrawer();
+  });
+  cartOverlay?.addEventListener("click", closeCartDrawer);
+
+  categoryButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      if (button.classList.contains("active")) {
+        return;
+      }
+
+      categoryButtons.forEach(function (btn) {
+        btn.classList.remove("active");
+      });
+      button.classList.add("active");
+
+      const categoryName = button.textContent.trim();
+      sectionTitle.textContent = categoryName;
+      showToast(`${categoryName}のメニューに切り替えました。`);
+    });
+  });
+
+  bottomNavButtons.forEach(function (button, index) {
+    button.addEventListener("click", function () {
+      if (index === 0) {
+        showToast("店員を呼ぶか会計画面へ進みます。");
+        setTimeout(function () {
+          window.location.href = "call_cash.html";
+        }, 300);
+      } else if (index === 1) {
+        showToast("注文履歴画面に移動します。");
+        setTimeout(function () {
+          window.location.href = "order_history.html";
+        }, 300);
+      } else {
+        openCartDrawer();
+      }
+    });
+  });
+});
