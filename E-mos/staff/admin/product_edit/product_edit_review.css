@@ -1,0 +1,149 @@
+html, body {
+  min-height: 100%;
+  margin: 0;
+  font-family: Meiryo, "Yu Gothic UI", sans-serif;
+  background: #eef2fb;
+  color: #1f2937;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 16px;
+}
+
+.container {
+  width: min(520px, 100%);
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  overflow: hidden;
+}
+
+.header-title {
+  margin: 0;
+  padding: 24px 24px 18px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #2563eb;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.form-row {
+  padding: 18px 24px;
+}
+
+.form-row:first-of-type {
+  padding-top: 24px;
+}
+
+.form-row:last-of-type {
+  padding-bottom: 24px;
+}
+
+.input-text {
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  font-size: 14px;
+  color: #0f172a;
+  box-sizing: border-box;
+}
+
+.input-text:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.16);
+}
+
+.list-box {
+  background: #f8fafc;
+  border: 1px solid #dbeafe;
+  border-radius: 18px;
+  padding: 18px;
+  min-height: 56px;
+}
+
+.list-box {
+  font-size: 15px;
+  color: #1f2937;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding: 0 24px 24px;
+}
+
+.btn,
+.btn-primary {
+  min-height: 48px;
+  padding: 0 18px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.btn {
+  background: #f8fafc;
+  color: #1f2937;
+  border-color: #cbd5e1;
+}
+
+.btn:hover,
+.btn:focus {
+  background: #e2e8f0;
+}
+
+.btn-primary {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background: #1d4ed8;
+}
+
+button {
+  font: inherit;
+}
+
+.error-msg {
+  display: none;
+  color: #dc2626;
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+@media (max-width: 460px) {
+  .card {
+    border-radius: 18px;
+  }
+
+  .header-title {
+    font-size: 18px;
+    padding: 20px 18px 14px;
+  }
+
+  .form-row,
+  .actions {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}

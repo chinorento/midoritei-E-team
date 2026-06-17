@@ -1,0 +1,55 @@
+.action-group {
+  display: grid;
+  gap: 18px;
+}
+.action-card {
+  background: #fff9f1;
+  border: 1px solid #f3c49a;
+  border-radius: 20px;
+  padding: 24px 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.action-card button {
+  width: 100%;
+  border: 2px solid #4f2a00;
+  border-radius: 16px;
+  background: #fff4e6;
+  color: #4f2a00;
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 16px 0;
+  cursor: pointer;
+}
+.action-card button:hover {
+  background: #ffe4ca;
+}
+.return-link {
+  display: block;
+  text-decoration: none;
+  text-align: center;
+  margin: 18px auto 0;
+  width: min(220px, 100%);
+  border: 1px solid #4f2a00;
+  border-radius: 16px;
+  background: #fff4e6;
+  color: #4f2a00;
+  padding: 12px 0;
+  font-weight: 700;
+}
+.return-link:hover {
+  background: #ffe4ca;
+}
+.content-area {
+  grid-template-columns: 1fr;
+}
+.sidebar {
+  display: none;
+}
+.menu-list {
+  padding: 24px 18px 18px;
+}
+.section-title {
+  margin-bottom: 28px;
+}
