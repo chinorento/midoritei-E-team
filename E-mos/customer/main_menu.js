@@ -22,6 +22,26 @@ document.addEventListener("DOMContentLoaded", function () {
   let cartItems = [];
   let currentModalCard = null;
 
+  // LocalStorage からカート情報を復元
+  function loadCartFromStorage() {
+    const stored = localStorage.getItem("cartItems");
+    if (stored) {
+      try {
+        cartItems = JSON.parse(stored);
+      } catch (e) {
+        cartItems = [];
+      }
+    }
+  }
+
+  // LocalStorage にカート情報を保存
+  function saveCartToStorage() {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }
+
+  // ページ読み込み時にカートを復元
+  loadCartFromStorage();
+
   function showToast(message) {
     const toast = document.createElement("div");
     toast.textContent = message;
@@ -66,6 +86,17 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
     menuModal.classList.add("hidden");
+  }
+
+  function filterMenuByCategory(category) {
+    menuCards.forEach(function (card) {
+      if (category === "おすすめ") {
+        card.style.display = "flex";
+        return;
+      }
+      const cardCategory = card.dataset.category || "";
+      card.style.display = cardCategory === category ? "flex" : "none";
+    });
   }
 
   function formatPrice(amount) {
@@ -162,6 +193,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     renderCartItems();
+    saveCartToStorage();
   }
 
   function addToCartItem(title, price, quantity) {
@@ -178,6 +210,8 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       cartItems.push({ title: title, price: price, quantity: quantity });
     }
+
+    saveCartToStorage();
   }
 
   function openCartDrawer() {
@@ -185,6 +219,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
     renderCartItems();
+    document.body.classList.add("no-scroll");
     cartDrawer.classList.remove("hidden");
     setTimeout(function () {
       cartDrawer.classList.add("open");
@@ -196,6 +231,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
     cartDrawer.classList.remove("open");
+    document.body.classList.remove("no-scroll");
   }
 
   menuCards.forEach(function (card) {
@@ -227,12 +263,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   cartCloseButton?.addEventListener("click", closeCartDrawer);
   cartConfirmButton?.addEventListener("click", function () {
+    if (cartItems.length === 0) {
+      showToast("カートの中身が入っていません。");
+      return;
+    }
     cartItems = [];
+    saveCartToStorage();
     renderCartItems();
     showToast("注文を確定しました。");
     closeCartDrawer();
   });
-  cartOverlay?.addEventListener("click", closeCartDrawer);
 
   categoryButtons.forEach(function (button) {
     button.addEventListener("click", function () {
@@ -247,17 +287,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const categoryName = button.textContent.trim();
       sectionTitle.textContent = categoryName;
-      showToast(`${categoryName}のメニューに切り替えました。`);
+      filterMenuByCategory(categoryName);
     });
   });
 
   bottomNavButtons.forEach(function (button, index) {
     button.addEventListener("click", function () {
       if (index === 0) {
-        showToast("店員を呼ぶか会計画面へ進みます。");
-        setTimeout(function () {
-          window.location.href = "call_cash.html";
-        }, 300);
+        window.location.href = "call_cash.html";
       } else if (index === 1) {
         showToast("注文履歴画面に移動します。");
         setTimeout(function () {
