@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
   const callButton = document.querySelector(".action-card button:nth-of-type(1)");
   const payButton = document.querySelector(".action-card button:nth-of-type(2)");
+  const callModal = document.querySelector("#callModal");
+  const callModalButton = document.querySelector(".call-modal__button");
 
   function showToast(message) {
     const toast = document.createElement("div");
@@ -25,18 +27,27 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 1600);
   }
 
+  function openCallModal() {
+    if (!callModal) return;
+    callModal.classList.remove("hidden");
+  }
+
+  function closeCallModal() {
+    if (!callModal) return;
+    callModal.classList.add("hidden");
+  }
+
   if (callButton) {
-    callButton.addEventListener("click", function () {
-      showToast("店員をお呼びしました。お待ちください。");
-    });
+    callButton.addEventListener("click", openCallModal);
+  }
+
+  if (callModalButton) {
+    callModalButton.addEventListener("click", closeCallModal);
   }
 
   if (payButton) {
     payButton.addEventListener("click", function () {
-      showToast("会計画面に進みます。");
-      setTimeout(() => {
-        window.location.href = "main_menu.html";
-      }, 800);
+      window.location.href = "main_menu.html";
     });
   }
 });

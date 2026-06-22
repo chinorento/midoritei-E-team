@@ -17,6 +17,9 @@ body {
 body {
   min-height: 100vh;
 }
+body.no-scroll {
+  overflow: hidden;
+}
 .page-container {
   width: min(100%, 1040px);
   margin: 0 auto 76px;
@@ -43,34 +46,30 @@ body {
   text-align: center;
 }
 .content-area {
-  display: grid;
-  grid-template-columns: 220px 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 18px;
 }
 .sidebar {
-  position: sticky;
-  top: 16px;
-  align-self: start;
+  width: 100%;
 }
 .category-nav {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
   background: #fff3e8;
   border: 1px solid #f0b47a;
   border-radius: 18px;
   padding: 18px 14px;
-  /* make the sidebar frame extend to near-full viewport height */
-  height: calc(100vh - 160px);
+  height: auto;
 }
 .category {
   border: none;
   background: transparent;
   text-align: left;
-  font-size: 0.98rem;
-  padding: 12px 14px;
-  border-radius: 14px;
+  font-size: 1.05rem;
+  padding: 14px 16px;
+  border-radius: 16px;
   cursor: pointer;
   color: #7a3f08;
   transition: background 0.2s ease;
@@ -81,6 +80,7 @@ body {
   /* add a visible frame around each category label */
   border: 1px solid #f0b47a;
   background: #fff3e8;
+  flex-shrink: 0;
 }
 .category:hover,
 .category.active {
@@ -185,17 +185,19 @@ body {
 }
 .cart-drawer__panel {
   position: relative;
-  width: min(100%, 360px);
+  width: min(100%, 320px);
   height: 100%;
+  max-height: 92vh;
   background: #fff;
   box-shadow: -24px 0 80px rgba(0, 0, 0, 0.16);
-  padding: 24px;
+  padding: 20px;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  gap: 24px;
+  gap: 18px;
   transform: translateX(100%);
   transition: transform 0.32s ease;
   z-index: 1;
+  overscroll-behavior: contain;
 }
 .cart-drawer.open .cart-drawer__panel {
   transform: translateX(0);
@@ -210,6 +212,8 @@ body {
   display: grid;
   gap: 12px;
   align-items: start;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .cart-drawer__empty {
   margin: 0;
@@ -307,6 +311,7 @@ body {
 .menu-modal__dialog {
   position: relative;
   width: min(92vw, 420px);
+  max-width: 92vw;
   background: #fff;
   border-radius: 28px;
   padding: 28px 24px 20px;
@@ -351,7 +356,7 @@ body {
 }
 .menu-modal__quantity {
   display: grid;
-  grid-template-columns: 64px 1fr 64px;
+  grid-template-columns: minmax(0, 50px) 1fr minmax(0, 50px);
   gap: 10px;
   align-items: center;
 }
@@ -363,6 +368,8 @@ body {
   font-size: 1.3rem;
   cursor: pointer;
   padding: 10px 0;
+  width: 100%;
+  min-width: 0;
 }
 .quantity-input {
   border: 1px solid #d9c0a2;
@@ -371,6 +378,8 @@ body {
   font-size: 1rem;
   color: #5a2f06;
   padding: 10px 0;
+  width: 100%;
+  min-width: 0;
 }
 .menu-modal__actions {
   display: grid;
@@ -383,6 +392,7 @@ body {
   padding: 12px 0;
   cursor: pointer;
   font-size: 1rem;
+  width: 100%;
 }
 .menu-modal__button--secondary {
   background: #f5f0ed;
@@ -391,6 +401,26 @@ body {
 .menu-modal__button--primary {
   background: #c45d0c;
   color: #fff;
+}
+@media (max-width: 768px) {
+  .content-area {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    position: static;
+  }
+  .category-nav {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    height: auto;
+    overflow-x: auto;
+    padding: 10px 8px;
+    flex-wrap: nowrap;
+  }
+  .category {
+    flex-shrink: 0;
+  }
 }
 @media (max-width: 900px) {
   .page-container {
