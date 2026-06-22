@@ -9,6 +9,6 @@
     });
 
     btnBack.addEventListener('click', ()=>{
-        window.location.href = '../parttime/menu/menu.html';
+        window.location.href = '../menu/menu.html';
     });
 })();
