@@ -324,10 +324,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (index === 0) {
         window.location.href = "call_cash.html";
       } else if (index === 1) {
-        showToast("注文履歴画面に移動します。");
-        setTimeout(function () {
-          window.location.href = "order_history.html";
-        }, 300);
+        window.location.href = "order_history.html";
       } else {
         openCartDrawer();
       }

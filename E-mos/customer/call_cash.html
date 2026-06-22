@@ -19,10 +19,10 @@
         <div class="section-title">呼び出し・会計</div>
         <div class="action-group">
           <div class="action-card">
-            <button type="button">呼び出す</button>
+            <button type="button" data-action="call">呼び出す</button>
           </div>
           <div class="action-card">
-            <button type="button">会計</button>
+            <button type="button" data-action="pay">会計</button>
           </div>
         </div>
         <a href="main_menu.html" class="return-link">メニューへ戻る</a>
@@ -37,6 +37,25 @@
       <p class="call-modal__submessage">しばらくお待ちください。</p>
       <div class="call-modal__icon">👤</div>
       <button class="call-modal__button" type="button">戻る</button>
+    </div>
+  </div>
+
+  <div class="pay-modal hidden" id="payModal">
+    <div class="pay-modal__overlay"></div>
+    <div class="pay-modal__dialog">
+      <div class="pay-card">
+        <div class="pay-card__header">
+          <p class="pay-card__table">卓番〇</p>
+          <p class="pay-card__amount">お支払金額</p>
+          <p class="pay-card__yen">¥0</p>
+        </div>
+        <img class="pay-card__barcode" src="sdesign_00052.png" alt="バーコード" />
+        <div class="pay-card__footer">
+          <p>ご来店ありがとうございました。</p>
+          <p>レジへお越しください。</p>
+        </div>
+      </div>
+      <button class="pay-modal__button" type="button">閉じる</button>
     </div>
   </div>
 </body>

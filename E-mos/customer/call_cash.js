@@ -1,8 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const callButton = document.querySelector(".action-card button:nth-of-type(1)");
-  const payButton = document.querySelector(".action-card button:nth-of-type(2)");
+  const callButton = document.querySelector("button[data-action=call]");
+  const payButton = document.querySelector("button[data-action=pay]");
   const callModal = document.querySelector("#callModal");
+  const payModal = document.querySelector("#payModal");
   const callModalButton = document.querySelector(".call-modal__button");
+  const payModalButton = document.querySelector(".pay-modal__button");
 
   function showToast(message) {
     const toast = document.createElement("div");
@@ -37,6 +39,16 @@ document.addEventListener("DOMContentLoaded", function () {
     callModal.classList.add("hidden");
   }
 
+  function openPayModal() {
+    if (!payModal) return;
+    payModal.classList.remove("hidden");
+  }
+
+  function closePayModal() {
+    if (!payModal) return;
+    payModal.classList.add("hidden");
+  }
+
   if (callButton) {
     callButton.addEventListener("click", openCallModal);
   }
@@ -46,8 +58,10 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   if (payButton) {
-    payButton.addEventListener("click", function () {
-      window.location.href = "main_menu.html";
-    });
+    payButton.addEventListener("click", openPayModal);
+  }
+
+  if (payModalButton) {
+    payModalButton.addEventListener("click", closePayModal);
   }
 });
