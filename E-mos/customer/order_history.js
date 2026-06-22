@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <li class="menu-item">
                 <div class="menu-copy">
                   <span class="menu-name">${item.title}</span>
+                  <span class="menu-qty">${Number(item.quantity || 0)}個</span>
                   <span class="menu-note">済</span>
                 </div>
                 <div class="menu-meta">

@@ -17,11 +17,21 @@ function updateUI() {
   children = Math.max(0, children);
 
   const total = adults + children;
+  const canConfirm = total > 0 && adults > 0;
+
   adultCount.textContent = adults;
   childCount.textContent = children;
   totalBox.textContent = `合計 ${total}人`;
-  helperText.textContent = total === 0 ? '人数が入力されていません' : '';
-  confirmBtn.disabled = total === 0;
+
+  if (total === 0) {
+    helperText.textContent = '人数が入力されていません';
+  } else if (adults === 0) {
+    helperText.textContent = '大人が1人以上必要です';
+  } else {
+    helperText.textContent = '';
+  }
+
+  confirmBtn.disabled = !canConfirm;
 
   adultMinus.disabled = adults <= 0;
   childMinus.disabled = children <= 0;
@@ -52,6 +62,11 @@ childPlus.addEventListener('click', () => {
 confirmBtn.addEventListener('click', () => {
   if (adults + children === 0) {
     helperText.textContent = '人数が入力されていません';
+    return;
+  }
+
+  if (adults === 0) {
+    helperText.textContent = '大人が1人以上必要です';
     return;
   }
 
