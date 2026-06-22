@@ -345,11 +345,12 @@ body{margin:0;font-family:"Hiragino Kaku Gothic ProN",Meiryo,sans-serif;backgrou
 .value-box,.table-input{width:100%;min-height:58px;border:2px solid #d1d5db;border-radius:16px;padding:14px 16px;font-size:16px;background:#fff;display:flex;align-items:center}
 .value-box{background:#f8fafc;justify-content:flex-start}
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
-.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,23,42,0.4);display:flex;align-items:center;justify-content:center;padding:20px;z-index:10}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(199,210,232,0.6);display:flex;align-items:center;justify-content:center;padding:20px;z-index:10}
 .modal.hidden{display:none}
-.modal-content{width:100%;max-width:360px;padding:22px;border-radius:24px;background:#fff;border:1px solid #d1d5db;box-shadow:0 24px 48px rgba(15,23,42,0.12);text-align:center}
-.modal-content p{margin:0 0 22px;font-size:18px;color:#0f172a;line-height:1.6}
-.modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;justify-content:center}
+.modal-content{width:100%;max-width:360px;padding:32px 24px;border-radius:12px;background:#c7d2e8;border:3px solid #5a6b8a;box-shadow:0 24px 48px rgba(15,23,42,0.12);text-align:center}
+.modal-content p{margin:0 0 28px;font-size:20px;color:#2f2f2f;line-height:1.6;font-weight:500}
+.modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:16px;justify-content:center}
+.modal-actions button{min-width:90px;padding:12px 20px;border-radius:8px;border:2px solid #7a8ba8;background:#c7d2e8;color:#2f2f2f;font-size:16px;font-weight:700;cursor:pointer;transition:background-color .15s ease}
 
 @media(max-width:420px){.actions{grid-template-columns:1fr}.table-input,.value-box{min-height:52px}}
 
@@ -373,6 +374,22 @@ label{display:block;font-size:18px;color:#222;margin-bottom:8px}
 .field-error{color:#c00;font-size:13px;margin-top:6px}
 
 @media (max-width:360px){.card{width:92%}}
+
+/* ==========================
+   parttime/soldout.css
+   ========================== */
+.soldout-search-box{display:flex;gap:12px;margin-bottom:16px}
+.soldout-search-input{flex:1;padding:12px 14px;border:1px solid #cbd5e1;border-radius:14px;font-size:15px;color:#0f172a;background:#f8fafc}
+.soldout-search-input:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 4px rgba(37,99,235,0.16)}
+.soldout-search-btn{width:48px;height:48px;padding:0;border-radius:14px;border:1px solid #cbd5e1;background:#f8fafc;cursor:pointer;font-size:18px;transition:transform .15s ease}
+.soldout-search-btn:hover{transform:translateY(-1px)}
+.soldout-label{display:block;margin-bottom:12px;font-size:14px;color:#64748b;font-weight:700}
+.soldout-results-box{min-height:120px;padding:16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;margin-bottom:16px}
+.soldout-list{display:flex;flex-direction:column;gap:12px}
+.soldout-item{display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border-radius:12px;cursor:pointer;border:1px solid #e2e8f0;transition:background-color .15s ease}
+.soldout-item:hover{background:#eff6ff}
+.soldout-checkbox{width:20px;height:20px;cursor:pointer;flex-shrink:0}
+.soldout-name{font-size:15px;color:#0f172a;flex:1}
 
 /* ==========================
    parttime/staff_call.css
