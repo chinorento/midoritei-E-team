@@ -15,6 +15,17 @@ document.addEventListener('DOMContentLoaded', () => {
     return `¥${Number(amount).toLocaleString()}`;
   }
 
+  function formatOrderTime(value) {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) {
+      return '時刻不明';
+    }
+    return date.toLocaleTimeString('ja-JP', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  }
+
   function renderHistory() {
     if (!historyList || !summaryCard) {
       return;
@@ -60,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   <span class="menu-note">済</span>
                 </div>
                 <div class="menu-meta">
+                  <span class="menu-time">${formatOrderTime(order.createdAt)}</span>
                   <span class="menu-price">${formatCurrency(Number(item.price || 0) * Number(item.quantity || 0))}</span>
                 </div>
               </li>
