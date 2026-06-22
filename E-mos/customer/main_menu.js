@@ -214,6 +214,15 @@ document.addEventListener("DOMContentLoaded", function () {
         return item.title !== title;
       });
     } else {
+      const totalQuantity = cartItems.reduce(function (sum, item) {
+        return sum + (item.title === title ? 0 : item.quantity);
+      }, 0);
+
+      if (totalQuantity + quantity > 20) {
+        showToast("カートの合計は最大20個までです。");
+        return;
+      }
+
       existing.quantity = quantity;
     }
 
@@ -223,6 +232,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function addToCartItem(title, price, quantity) {
     if (!title || quantity <= 0) {
+      return;
+    }
+
+    const totalQuantity = cartItems.reduce(function (sum, item) {
+      return sum + item.quantity;
+    }, 0);
+
+    if (totalQuantity + quantity > 20) {
+      showToast("カートの合計は最大20個までです。");
       return;
     }
 
@@ -274,13 +292,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
   increaseButton?.addEventListener("click", function () {
     const value = Number(quantityInput.value || "1");
-    quantityInput.value = String(value + 1);
+    if (value < 20) {
+      quantityInput.value = String(value + 1);
+    }
   });
 
   modalBackButton?.addEventListener("click", closeMenuModal);
   modalConfirmButton?.addEventListener("click", function () {
     const count = Number(quantityInput.value || "1");
     const price = currentModalCard ? Number(currentModalCard.dataset.price || 0) : 0;
+
+    const totalQuantity = cartItems.reduce(function (sum, item) {
+      return sum + item.quantity;
+    }, 0);
+
+    if (totalQuantity >= 20) {
+      showToast("カートの合計は最大20個までです。");
+      return;
+    }
+
+    if (totalQuantity + count > 20) {
+      showToast("カートの合計は最大20個までです。");
+      return;
+    }
+
     addToCartItem(modalTitle.textContent, price, count);
     showToast(`${modalTitle.textContent}を${count}個カートに追加しました。`);
     closeMenuModal();
