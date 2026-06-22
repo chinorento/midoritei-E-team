@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="../../styles/style.css">
 </head>
 <body>
-    <header class="top">
-        <h1>テーブル番号変更</h1>
-    </header>
-
-    <main class="center">
+    <main class="content">
         <div class="page-card">
+            <div class="heading">
+                <p class="brand">テーブル番号変更</p>
+            </div>
+
             <div class="field">
                 <label class="label" for="currentTableInput">変更前</label>
                 <input id="currentTableInput" class="table-input" type="text" aria-label="変更前テーブル番号入力">
@@ -26,14 +26,14 @@
                 <button id="btnBack" class="btn outline">戻る</button>
                 <button id="btnSave" class="btn primary">変更</button>
             </div>
-        </div>
 
-        <div id="confirmModal" class="modal hidden">
-            <div class="modal-content">
-                <p>テーブル番号を変更しますか？</p>
-                <div class="modal-actions">
-                    <button id="btnCancel" class="btn outline">いいえ</button>
-                    <button id="btnConfirm" class="btn primary">はい</button>
+            <div id="confirmModal" class="modal hidden">
+                <div class="modal-content">
+                    <p>テーブル番号を変更しますか？</p>
+                    <div class="modal-actions">
+                        <button id="btnCancel" class="btn outline">いいえ</button>
+                        <button id="btnConfirm" class="btn primary">はい</button>
+                    </div>
                 </div>
             </div>
         </div>

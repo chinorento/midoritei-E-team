@@ -12,6 +12,7 @@
 
     <main class="content">
         <div class="page-card">
+            <button class="gear" id="gearBtn" aria-label="ログアウト" title="ログアウト">⚙</button>
             <div class="heading">
                 <p class="brand">みどり亭</p>
                 <p class="subtitle">メニュー管理システム<br>アルバイト用</p>
@@ -25,10 +26,24 @@
                 <button class="menu-button" data-target="../order_cancel.html">注文キャンセル</button>
                 <button class="menu-button" data-target="../order_status_change.html">提供済み変更</button>
                 <button class="menu-button" data-target="../order_all/order_all.html">オーダー一覧</button>
-                <button class="menu-button" data-target="../../staff_call/staff_call.html">店員呼び出し</button>
+                <button class="menu-button" data-target="../staff_call/staff_call.html">店員呼び出し</button>
             </nav>
         </div>
     </main>
+
+    <!-- 確認モーダル -->
+    <div id="confirmModal" aria-hidden="true">
+      <div class="modal-backdrop"></div>
+      <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+        <div class="modal-content">
+          <h2 id="confirmTitle">ログアウトしますか？</h2>
+          <div class="modal-actions">
+            <button id="cancelBtn">いいえ</button>
+            <button id="okBtn">はい</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script src="menu.js"></script>
 </body>

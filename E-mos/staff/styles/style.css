@@ -248,7 +248,7 @@ button, a {font: inherit}
 :root{--bg:#f2f4f8;--card:#fff;--text:#1e293b;--accent:#2563eb;--border:#cbd5e1}
 body{margin:0;font-family:"Hiragino Kaku Gothic ProN",Meiryo,sans-serif;background:var(--bg);color:var(--text);display:flex;justify-content:center;align-items:center;min-height:100vh;}
 .content{width:100%;display:flex;justify-content:center}
-.page-card{width:100%;max-width:420px;background:var(--card);border-radius:28px;box-shadow:0 22px 40px rgba(15,23,42,.08);padding:24px;display:flex;flex-direction:column;gap:18px}
+.page-card{width:100%;max-width:420px;background:var(--card);border-radius:28px;box-shadow:0 22px 40px rgba(15,23,42,.08);padding:24px;display:flex;flex-direction:column;gap:18px;position:relative}
 .button-list{display:flex;flex-direction:column;gap:12px}
 .menu-button{width:100%;padding:16px;border-radius:16px;border:1px solid var(--border);background:#d1d5db;cursor:pointer;transition:.15s}
 .menu-button:hover{transform:translateY(-1px);box-shadow:0 10px 18px rgba(15,23,42,.08)}
