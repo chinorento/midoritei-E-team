@@ -350,3 +350,111 @@ tus)$
 ・orderQty
 ・offerQty
 以上
+
+---
+
+## バックエンド開発ガイド
+
+### PHP バックエンド構成
+
+本プロジェクトはPHPをバックエンドとして採用しています。以下の構成に従ってください。
+
+#### ディレクトリ構成
+```
+backend/
+  ├── api/              # APIエンドポイント
+  │   ├── config.php    # DB接続情報、ヘッダー設定
+  │   └── orders.php    # 注文API (getOrders, updateStatus)
+  ├── includes/         # 共通ライブラリ
+  │   ├── Database.php  # DB接続クラス
+  │   └── helpers.php   # ユーティリティ関数
+  ├── database/         # DB構造スクリプト
+  └── logs/             # ログファイル（自動生成）
+```
+
+### API 実装ルール
+
+#### 1. エンドポイント
+- **URL**: `/api/orders`
+- **メソッド**: POST のみ
+- **Content-Type**: `application/json`
+
+#### 2. APIメソッド
+すべてのリクエストには `method` フィールドを含めてください。
+
+**例: getOrders API を呼び出す場合**
+```javascript
+// フロントエンド（JavaScript）
+fetch('http://localhost/api/orders', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    method: 'getOrders',
+    customerId: '0000001',
+    billStatus: 1,
+    fromTime: null,
+    toTime: null
+  })
+})
+.then(response => response.json())
+.then(data => {
+  if (data.status === 'success') {
+    console.log('注文データ:', data.data);
+  } else {
+    console.error('エラー:', data.message);
+  }
+});
+```
+
+#### 3. レスポンス形式
+```json
+{
+  "status": "success|error",
+  "data": {},
+  "message": "エラーメッセージ（エラー時のみ）"
+}
+```
+
+### PHPコーディング規則
+
+#### インデント
+- 2スペースを使用（タブは使用しない）
+
+#### 命名規則
+- **関数・変数**: `camelCase` （例: `getOrderData()`, `customerId`）
+- **データベース列**: `snake_case` （例: `customer_id`, `bill_status`）
+- **クラス**: `PascalCase` （例: `Database`, `OrderAPI`）
+
+#### セキュリティ
+- **SQLインジェクション対策**: プリペアステートメント (`prepared statement`) を使用
+- **入力値エスケープ**: ユーザー入力は `htmlspecialchars()` でエスケープ
+- **エラーハンドリング**: `try-catch` で例外を処理し、詳細なエラーをログに記録
+
+#### 例: 安全なDB操作
+```php
+// 正: プリペアステートメントを使用
+$sql = 'SELECT * FROM orders WHERE customer_id = ? AND bill_status = ?';
+$orders = $db->select($sql, 'si', [$customerId, $billStatus]);
+
+// 誤: 文字列結合（SQLインジェクションの危険性あり）
+$sql = "SELECT * FROM orders WHERE customer_id = '$customerId'";
+```
+
+### データベース設定
+
+`backend/api/config.php` で以下の情報を設定してください：
+
+```php
+define('DB_HOST', 'localhost');      // ホスト
+define('DB_USER', 'root');           // ユーザー名
+define('DB_PASSWORD', '');           // パスワード
+define('DB_NAME', 'midoritei_mos');  // データベース名
+```
+
+### 開発時の注意点
+
+1. **ログの確認**: エラーは `backend/logs/` に日付ごとのログとして記録されます
+2. **CORSの設定**: クロスオリジンリクエストが必要な場合、`config.php` のCORSヘッダーを調整してください
+3. **テスト**: Postman や curl を使ってAPIをテストしてください
