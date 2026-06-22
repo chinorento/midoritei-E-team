@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const cartConfirmButton = document.querySelector(".cart-drawer__button--primary");
   const cartList = document.querySelector(".cart-drawer__list");
   const cartEmptyText = document.querySelector(".cart-drawer__empty");
+  const orderHistoryKey = "orderHistory";
   const modalBackButton = document.querySelector(".menu-modal__button--secondary");
   const modalConfirmButton = document.querySelector(".menu-modal__button--primary");
   const modalTitle = document.querySelector(".menu-modal__title");
@@ -104,6 +105,30 @@ document.addEventListener("DOMContentLoaded", function () {
       return "";
     }
     return "¥" + Number(amount).toLocaleString() + "（税込）";
+  }
+
+  function getStoredOrderHistory() {
+    try {
+      return JSON.parse(sessionStorage.getItem(orderHistoryKey) || "[]");
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function saveConfirmedOrder(items) {
+    const history = getStoredOrderHistory();
+    history.unshift({
+      id: Date.now(),
+      createdAt: new Date().toISOString(),
+      items: items.map(function (item) {
+        return {
+          title: item.title,
+          price: Number(item.price || 0),
+          quantity: Number(item.quantity || 0)
+        };
+      })
+    });
+    sessionStorage.setItem(orderHistoryKey, JSON.stringify(history));
   }
 
   function renderCartItems() {
@@ -263,6 +288,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   cartCloseButton?.addEventListener("click", closeCartDrawer);
   cartConfirmButton?.addEventListener("click", function () {
+    if (cartItems.length > 0) {
+      saveConfirmedOrder(cartItems);
+    }
     if (cartItems.length === 0) {
       showToast("カートの中身が入っていません。");
       return;
