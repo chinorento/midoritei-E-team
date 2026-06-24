@@ -391,6 +391,15 @@ label{display:block;font-size:18px;color:#222;margin-bottom:8px}
 .soldout-checkbox{width:20px;height:20px;cursor:pointer;flex-shrink:0}
 .soldout-name{font-size:15px;color:#0f172a;flex:1}
 
+/* soldout modal */
+#confirmModal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(15,23,42,0.2);z-index:20}
+#confirmModal.hidden{display:none}
+#confirmModal .modal-content{width:min(360px,100%);margin:auto;padding:32px 24px;border-radius:18px;background:#d4d9e7;border:3px solid #5a6b8a;box-shadow:0 24px 48px rgba(15,23,42,0.12);text-align:center}
+#confirmModal .modal-content p{margin:0 0 28px;font-size:20px;color:#2f2f2f;line-height:1.6;font-weight:500}
+#confirmModal .modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:16px;justify-content:center}
+#confirmModal .modal-actions button{min-width:100px;padding:12px 18px;border-radius:10px;border:2px solid #7a8ba8;background:#c7d2e8;color:#2f2f2f;font-size:16px;font-weight:700;cursor:pointer;transition:background-color .15s ease}
+#confirmModal .modal-actions button:hover{background:#b3bed3}
+
 /* ==========================
    parttime/staff_call.css
    ========================== */

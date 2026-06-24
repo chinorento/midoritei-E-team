@@ -14,8 +14,8 @@
     var cancel = document.getElementById('cancelBtn');
     var ok = document.getElementById('okBtn');
     
-    function show(){ modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; cancel.focus(); }
-    function hide(){ modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; gear.focus(); }
+    function show(){ modal.classList.remove('hidden'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; cancel.focus(); }
+    function hide(){ modal.classList.add('hidden'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; gear.focus(); }
     
     gear.addEventListener('click', function(e){ e.preventDefault(); show(); });
     cancel.addEventListener('click', function(e){ e.preventDefault(); hide(); });

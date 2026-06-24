@@ -96,18 +96,35 @@
         window.location.href = '../menu/menu.html';
     });
 
+    function openConfirmModal() {
+        confirmModal.classList.remove('hidden');
+        confirmModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeConfirmModal() {
+        confirmModal.classList.add('hidden');
+        confirmModal.setAttribute('aria-hidden', 'true');
+    }
+
     // 変更ボタン - モーダル表示
     btnChange.addEventListener('click', function() {
         if (selectedItems.size === 0) {
             alert('変更する商品を選択してください');
             return;
         }
-        confirmModal.classList.remove('hidden');
+        openConfirmModal();
     });
 
     // キャンセルボタン
     btnCancel.addEventListener('click', function() {
-        confirmModal.classList.add('hidden');
+        closeConfirmModal();
+    });
+
+    // モーダルの背景クリックでも閉じる
+    confirmModal.addEventListener('click', function(e) {
+        if (e.target === confirmModal) {
+            closeConfirmModal();
+        }
     });
 
     // 確認ボタン
@@ -123,7 +140,7 @@
     // Escキーでモーダルを閉じる
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && !confirmModal.classList.contains('hidden')) {
-            confirmModal.classList.add('hidden');
+            closeConfirmModal();
         }
     });
 
