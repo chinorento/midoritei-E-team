@@ -33,15 +33,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function getMaxOrderQuantity() {
     const partyCount = getPartyCount();
-    return partyCount >= 4 ? 20 : Math.min(20, partyCount * 5);
+    return Math.min(20, partyCount * 5);
   }
-
-  const maxOrderQuantity = getMaxOrderQuantity();
 
   function getCartTotalQuantity() {
     return cartItems.reduce(function (sum, item) {
       return sum + Number(item.quantity || 0);
     }, 0);
+  }
+
+  function getRemainingOrderQuantity() {
+    return Math.max(0, getMaxOrderQuantity() - getCartTotalQuantity());
   }
 
   // LocalStorage からカート情報を復元
@@ -94,15 +96,14 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    const max = getMaxOrderQuantity();
-    const totalQuantity = getCartTotalQuantity();
+    const remaining = getRemainingOrderQuantity();
     const currentValue = Number(quantityInput.value || "0");
-    const safeValue = Math.min(Math.max(0, currentValue), max);
+    const safeValue = Math.min(Math.max(0, currentValue), remaining);
 
     quantityInput.value = String(safeValue);
-    quantityInput.max = String(max);
+    quantityInput.max = String(remaining);
 
-    const isAtMax = safeValue >= max;
+    const isAtMax = safeValue >= remaining;
     const isAtMin = safeValue <= 0;
     decreaseButton.disabled = isAtMin;
     increaseButton.disabled = isAtMax;
@@ -118,6 +119,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const imageLabel = card.querySelector(".menu-card__image")?.textContent.trim() || "商品";
     modalTitle.textContent = title;
     modalImage.textContent = imageLabel;
+
+    const remaining = getRemainingOrderQuantity();
+    if (quantityInput) {
+      quantityInput.value = String(remaining > 0 ? 1 : 0);
+    }
+
     updateQuantityControls();
     menuModal.classList.remove("hidden");
   }
@@ -254,11 +261,10 @@ document.addEventListener("DOMContentLoaded", function () {
         return item.title !== title;
       });
     } else {
-      const totalQuantity = getCartTotalQuantity();
-      const nextTotal = totalQuantity - existing.quantity + quantity;
+      const nextTotal = getCartTotalQuantity() - existing.quantity + quantity;
 
-      if (nextTotal > maxOrderQuantity) {
-        showToast(`人数に応じて最大${maxOrderQuantity}個までです。`);
+      if (nextTotal > getMaxOrderQuantity()) {
+        showToast(`人数に応じて最大${getMaxOrderQuantity()}個までです。`);
         return;
       }
 
@@ -274,10 +280,10 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    const totalQuantity = getCartTotalQuantity();
+    const remaining = getRemainingOrderQuantity();
 
-    if (totalQuantity + quantity > maxOrderQuantity) {
-      showToast(`人数に応じて最大${maxOrderQuantity}個までです。`);
+    if (quantity > remaining) {
+      showToast(`残り${remaining}個まで追加できます。`);
       return;
     }
 
@@ -330,8 +336,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   increaseButton?.addEventListener("click", function () {
     const value = Number(quantityInput.value || "0");
-    const max = getMaxOrderQuantity();
-    if (value < max) {
+    const remaining = getRemainingOrderQuantity();
+    if (value < remaining) {
       quantityInput.value = String(value + 1);
     }
     updateQuantityControls();
@@ -339,22 +345,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
   modalBackButton?.addEventListener("click", closeMenuModal);
   modalConfirmButton?.addEventListener("click", function () {
-    const count = Math.min(Number(quantityInput.value || "0"), getMaxOrderQuantity());
+    const remaining = getRemainingOrderQuantity();
+    const count = Math.min(Number(quantityInput.value || "0"), remaining);
     const price = currentModalCard ? Number(currentModalCard.dataset.price || 0) : 0;
 
-    const totalQuantity = getCartTotalQuantity();
-
-    if (totalQuantity >= maxOrderQuantity) {
+    if (remaining <= 0) {
       quantityInput.value = "0";
       updateQuantityControls();
-      showToast(`人数に応じて最大${maxOrderQuantity}個までです。`);
+      showToast(`人数に応じて最大${getMaxOrderQuantity()}個までです。`);
       return;
     }
 
-    if (totalQuantity + count > maxOrderQuantity) {
-      quantityInput.value = "0";
-      updateQuantityControls();
-      showToast(`人数に応じて最大${maxOrderQuantity}個までです。`);
+    if (count <= 0) {
+      showToast("追加できる個数がありません。");
       return;
     }
 
