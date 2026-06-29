@@ -51,15 +51,15 @@ main.center > .page-card, main.content > .page-card{width:100%;margin:0}
    ========================== */
 /* original: staff/styles/admin/menu.css */
 html,body{height:100%;margin:0;font-family:Meiryo,"Yu Gothic UI",sans-serif;background:#f5f5f5}
-.wrap{display:flex;align-items:center;justify-content:center;padding:28px}
-.card{width:320px;background:#fff;border-radius:6px;box-shadow:0 6px 18px rgba(0,0,0,0.08);padding:28px 20px;position:relative}
-.title{font-size:14px;color:#222;text-align:center;margin-bottom:18px}
-.subtitle{font-size:12px;color:#666;text-align:center;margin-top:-6px}
-.gear{position:absolute;right:12px;top:10px;display:inline-flex;align-items:center;justify-content:center;background:transparent;color:#222;border:none;padding:0;margin:0;font-size:18px;line-height:1;width:auto;height:auto;border-radius:0;cursor:pointer}
-.menu-btn{display:block;width:240px;box-sizing:border-box;margin:12px auto;padding:12px 0;background:#eee;border:1px solid #bfbfbf;border-radius:4px;color:#222;cursor:pointer;text-decoration:none;text-align:center;font-size:14px}
-.menu-btn-dark{display:block;width:240px;margin:12px auto;padding:12px 0;background:#555;color:#fff;border:1px solid #444;border-radius:4px;text-align:center;font-size:14px}
+.wrap{display:flex;align-items:center;justify-content:center;padding:24px}
+.card{width:360px;background:#fff;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,0.08);padding:32px 24px;position:relative}
+.title{font-size:16px;color:#222;text-align:center;margin-bottom:20px}
+.subtitle{font-size:14px;color:#666;text-align:center;margin-top:-4px}
+.gear{position:absolute;right:14px;top:12px;display:inline-flex;align-items:center;justify-content:center;background:transparent;color:#222;border:none;padding:0;margin:0;font-size:20px;line-height:1;width:auto;height:auto;border-radius:0;cursor:pointer}
+.menu-btn{display:block;width:280px;box-sizing:border-box;margin:14px auto;padding:14px 0;background:#eee;border:1px solid #bfbfbf;border-radius:6px;color:#222;cursor:pointer;text-decoration:none;text-align:center;font-size:15px}
+.menu-btn-dark{display:block;width:280px;margin:14px auto;padding:14px 0;background:#555;color:#fff;border:1px solid #444;border-radius:6px;text-align:center;font-size:15px}
 .page-num{position:fixed;right:18px;bottom:10px;color:#999;font-size:12px}
-.spacer{height:20px}
+.spacer{height:24px}
 
 /* モーダルスタイル */
 #confirmModal{display:none}
@@ -129,8 +129,8 @@ body {display: flex; justify-content: center; align-items: center; padding: 32px
 .list-box {max-height: 220px; border: 1px solid #d1d5db; border-radius: 18px; background: #ffffff; padding: 16px; overflow: auto}
 .list-box label {display: block; padding: 12px 0; font-size: 15px; color: #1f2937}
 .list-box label + label {border-top: 1px solid rgba(148, 163, 184, 0.18)}
-.actions {display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; padding: 0 24px 24px}
-.btn, .btn-primary {min-height: 50px; padding: 0 20px; border-radius: 16px; border: 1px solid transparent; font-size: 15px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; text-decoration: none}
+.actions {display: grid;grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; padding: 0 24px 24px; align-items: center; justify-items: stretch}
+.btn, .btn-primary {min-height: 50px; padding: 0 20px; border-radius: 16px; border: 1px solid transparent; font-size: 15px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; width: 100%; min-width: 0}
 .btn {background: #f8fafc; color: #1f2937; border-color: #cbd5e1}
 .btn:hover, .btn:focus {background: #e2e8f0}
 .btn-primary {background: #2563eb; color: #ffffff}
@@ -163,8 +163,8 @@ body {display: flex; justify-content: center; align-items: center; padding: 32px
 input[type="file"] {width: 100%; padding: 12px 14px; border-radius: 14px; border: 1px solid #cbd5e1; background: #f8fafc; color: #0f172a; box-sizing: border-box}
 .input-text:focus, input[type="file"]:focus {outline: none; border-color: #2563eb; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.16)}
 .error-msg {display: block; color: #dc2626; font-size: 12px; margin-top: 8px}
-.actions {display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; padding: 0 24px 24px}
-.btn, .btn-primary {min-height: 48px; padding: 0 18px; border-radius: 14px; border: 1px solid transparent; font-size: 15px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; text-decoration: none}
+actions {display: grid;grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; padding: 0 24px 24px; align-items: center; justify-items: stretch}
+.btn, .btn-primary {min-height: 48px; padding: 0 18px; border-radius: 14px; border: 1px solid transparent; font-size: 15px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; width: 100%; min-width: 0}
 .btn {background: #f8fafc; color: #1f2937; border-color: #cbd5e1}
 .btn:hover, .btn:focus {background: #e2e8f0}
 .btn-primary {background: #2563eb; color: #ffffff}
