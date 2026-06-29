@@ -23,6 +23,27 @@ document.addEventListener("DOMContentLoaded", function () {
   let cartItems = [];
   let currentModalCard = null;
 
+  function getPartyCount() {
+    const stored = Number(localStorage.getItem("partySize") || "1");
+    if (!Number.isFinite(stored) || stored <= 0) {
+      return 1;
+    }
+    return Math.min(40, Math.floor(stored));
+  }
+
+  function getMaxOrderQuantity() {
+    const partyCount = getPartyCount();
+    return partyCount >= 4 ? 20 : Math.min(20, partyCount * 5);
+  }
+
+  const maxOrderQuantity = getMaxOrderQuantity();
+
+  function getCartTotalQuantity() {
+    return cartItems.reduce(function (sum, item) {
+      return sum + Number(item.quantity || 0);
+    }, 0);
+  }
+
   // LocalStorage からカート情報を復元
   function loadCartFromStorage() {
     const stored = localStorage.getItem("cartItems");
@@ -68,6 +89,25 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 1400);
   }
 
+  function updateQuantityControls() {
+    if (!quantityInput || !decreaseButton || !increaseButton) {
+      return;
+    }
+
+    const max = getMaxOrderQuantity();
+    const totalQuantity = getCartTotalQuantity();
+    const currentValue = Number(quantityInput.value || "0");
+    const safeValue = Math.min(Math.max(0, currentValue), max);
+
+    quantityInput.value = String(safeValue);
+    quantityInput.max = String(max);
+
+    const isAtMax = safeValue >= max;
+    const isAtMin = safeValue <= 0;
+    decreaseButton.disabled = isAtMin;
+    increaseButton.disabled = isAtMax;
+  }
+
   function openMenuModal(card) {
     if (!menuModal) {
       return;
@@ -78,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const imageLabel = card.querySelector(".menu-card__image")?.textContent.trim() || "商品";
     modalTitle.textContent = title;
     modalImage.textContent = imageLabel;
-    quantityInput.value = "1";
+    updateQuantityControls();
     menuModal.classList.remove("hidden");
   }
 
@@ -214,12 +254,11 @@ document.addEventListener("DOMContentLoaded", function () {
         return item.title !== title;
       });
     } else {
-      const totalQuantity = cartItems.reduce(function (sum, item) {
-        return sum + (item.title === title ? 0 : item.quantity);
-      }, 0);
+      const totalQuantity = getCartTotalQuantity();
+      const nextTotal = totalQuantity - existing.quantity + quantity;
 
-      if (totalQuantity + quantity > 20) {
-        showToast("カートの合計は最大20個までです。");
+      if (nextTotal > maxOrderQuantity) {
+        showToast(`人数に応じて最大${maxOrderQuantity}個までです。`);
         return;
       }
 
@@ -235,12 +274,10 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    const totalQuantity = cartItems.reduce(function (sum, item) {
-      return sum + item.quantity;
-    }, 0);
+    const totalQuantity = getCartTotalQuantity();
 
-    if (totalQuantity + quantity > 20) {
-      showToast("カートの合計は最大20個までです。");
+    if (totalQuantity + quantity > maxOrderQuantity) {
+      showToast(`人数に応じて最大${maxOrderQuantity}個までです。`);
       return;
     }
 
@@ -284,35 +321,40 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   decreaseButton?.addEventListener("click", function () {
-    const value = Number(quantityInput.value || "1");
-    if (value > 1) {
+    const value = Number(quantityInput.value || "0");
+    if (value > 0) {
       quantityInput.value = String(value - 1);
     }
+    updateQuantityControls();
   });
 
   increaseButton?.addEventListener("click", function () {
-    const value = Number(quantityInput.value || "1");
-    if (value < 20) {
+    const value = Number(quantityInput.value || "0");
+    const max = getMaxOrderQuantity();
+    if (value < max) {
       quantityInput.value = String(value + 1);
     }
+    updateQuantityControls();
   });
 
   modalBackButton?.addEventListener("click", closeMenuModal);
   modalConfirmButton?.addEventListener("click", function () {
-    const count = Number(quantityInput.value || "1");
+    const count = Math.min(Number(quantityInput.value || "0"), getMaxOrderQuantity());
     const price = currentModalCard ? Number(currentModalCard.dataset.price || 0) : 0;
 
-    const totalQuantity = cartItems.reduce(function (sum, item) {
-      return sum + item.quantity;
-    }, 0);
+    const totalQuantity = getCartTotalQuantity();
 
-    if (totalQuantity >= 20) {
-      showToast("カートの合計は最大20個までです。");
+    if (totalQuantity >= maxOrderQuantity) {
+      quantityInput.value = "0";
+      updateQuantityControls();
+      showToast(`人数に応じて最大${maxOrderQuantity}個までです。`);
       return;
     }
 
-    if (totalQuantity + count > 20) {
-      showToast("カートの合計は最大20個までです。");
+    if (totalQuantity + count > maxOrderQuantity) {
+      quantityInput.value = "0";
+      updateQuantityControls();
+      showToast(`人数に応じて最大${maxOrderQuantity}個までです。`);
       return;
     }
 

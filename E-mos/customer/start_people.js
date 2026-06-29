@@ -70,6 +70,7 @@ confirmBtn.addEventListener('click', () => {
     return;
   }
 
+  localStorage.setItem('partySize', String(adults + children));
   window.location.href = 'main_menu.html';
 });
 
